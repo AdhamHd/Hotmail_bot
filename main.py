@@ -6,7 +6,8 @@ from telegram import Update, ReplyKeyboardMarkup, InputFile
 from telegram.ext import ApplicationBuilder, MessageHandler, CommandHandler, filters, ContextTypes
 import asyncio
 import io
-
+import os
+import json
 # -------- CONFIG --------
 BOT_TOKEN = "8310408838:AAHl5v7134Vl1zefwHAllR8mymZjKPpgFlc"
 COLLECTION = "Hotmail"
@@ -14,8 +15,12 @@ CAIRO = ZoneInfo("Africa/Cairo")
 PASSWORD = "@2468@As"
 
 # ---------- Firebase ----------
-cred = credentials.Certificate("HotmailDB.json")
+cred_json = os.getenv("Firebase_CREDENTIALS")
+cred_dict = json.loads(cred_json)
+
+cred = credentials.Certificate(cred_dict)
 firebase_admin.initialize_app(cred)
+
 db = firestore.client()
 
 # ---------- keyboard ----------
